@@ -1,17 +1,35 @@
-export const Searchbar = () => {
-    return (<header class="searchbar">
-    <form class="form">
-      <button type="submit" class="button">
-        <span class="button-label">Search</span>
+import { Component } from "react"
+import "./styles.css";
+
+export class Searchbar extends Component {
+  state = {
+    keyWord: ""
+  }
+handleSubmitStateKeyWord = (e) => {
+  e.preventDefault()
+  const inputValue = e.target.elements.searchInput.value;
+
+this.props.onSubmit(inputValue)
+// console.log(this.state)
+}
+
+
+render (){
+    return (
+    <header className="searchbar">
+    <form className="form" onSubmit={this.handleSubmitStateKeyWord}>
+      <button type="submit" className="button">
+        <span className="button-label">Search</span>
       </button>
   
       <input
-        class="input"
+      name="searchInput"
+        className="input"
         type="text"
-        autocomplete="off"
-        autofocus
+        autoComplete="off"
+        autoFocus
         placeholder="Search images and photos"
       />
     </form>
-  </header>)
+  </header>)}
 }
