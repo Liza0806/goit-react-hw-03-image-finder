@@ -7,7 +7,7 @@ const modalRoot = document.querySelector("#modal")
 export class Modal extends Component {
 
   render(){
-    const { onClose, img } = this.props;
+    const { onClose} = this.props;
     return createPortal(<div className="overlay">
     <div className="modal">
     <img src={this.props.img} alt="" />
