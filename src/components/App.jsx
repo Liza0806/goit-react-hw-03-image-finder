@@ -6,7 +6,7 @@
  // import { Modal } from "./Modal";
 import { Component } from "react"
 import { Searchbar } from "./Searchbar";
-import { ImageGalleryItem } from "./ImageGalleryItem";
+
 
 
 export class App extends Component {
