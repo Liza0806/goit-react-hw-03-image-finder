@@ -3,24 +3,25 @@ import "./styles.css";
 
 
 export class ImageGalleryItem extends Component {
-  state = {
-   pictures: this.props.pictures,
-    keyWord: this.props.keyWord,
-  }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.keyWord !== this.props.keyWord) {
-      this.props.fetchData();
-    }
+  state ={
+    showModal: false
   }
-
+  handleClick = (e) => {
+    e.preventDefault()
+   
+  
+    this.props.openModal(true)
+  };
   render() {
+    console.log(this.props.pictures[0].pageURL)
     return (
       <div>
-        {this.state.pictures &&
-          this.state.pictures.map(item => (
-            <li key={item.id} className="gallery-item">
-              <img src={item.pageURL} alt={item.id} />
+        {this.props.pictures &&
+          this.props.pictures.map(item => (
+          
+            <li key={item.id} className="gallery-item"> <a href={item.largeImageURL} onClick={this.handleClick} >
+              <img src={item.pageURL} alt={item.id}  /></a> 
             </li>
           ))
         }
@@ -28,3 +29,4 @@ export class ImageGalleryItem extends Component {
     );
   }
 }
+

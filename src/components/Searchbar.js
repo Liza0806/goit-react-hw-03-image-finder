@@ -1,15 +1,18 @@
 import { Component } from "react"
+import { toast } from "react-toastify";
 import "./styles.css";
 
 export class Searchbar extends Component {
   state = {
-    keyWord: ""
+    keyWord: "",
   }
 handleSubmitStateKeyWord = (e) => {
   e.preventDefault()
-  const inputValue = e.target.elements.searchInput.value;
-
-this.props.onSubmit(inputValue)
+  let inputValue = e.target.elements.searchInput.value.toLowerCase();
+if(inputValue.trim() === ""){
+ return toast.error("Get name")
+}
+this.props.onSubmit(inputValue);
 // console.log(this.state)
 }
 
