@@ -10,7 +10,6 @@ export class ImageGalleryItem extends Component {
   handleClick = (e) => {
     e.preventDefault()
    
-  
     this.props.openModal(true)
   };
   render() {

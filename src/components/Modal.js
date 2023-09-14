@@ -10,7 +10,7 @@ export class Modal extends Component {
     const { image, onClose } = this.props;
     return createPortal(<div className="overlay">
     <div className="modal">
-    <img src={image} alt="Large Image" />
+    <img src="" alt="Large Image" />
           <button onClick={onClose}>Close</button>
     </div>
   </div>, modalRoot)}
