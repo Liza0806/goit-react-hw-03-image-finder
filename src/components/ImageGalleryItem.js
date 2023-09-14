@@ -10,6 +10,7 @@ export class ImageGalleryItem extends Component {
   handleClick = (e, item) => {
     e.preventDefault();
     this.props.openModal(true, item.largeImageURL);
+   // console.log(item)
   };
   render() {
     console.log(this.props.pictures[0].pageURL)
