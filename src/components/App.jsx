@@ -5,9 +5,9 @@
 import { Loader } from "./Loader";
 import { Modal } from "./Modal";
 import { Component } from "react"
-import ReactDOM from 'react-dom';
+
 import { Searchbar } from "./Searchbar";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
