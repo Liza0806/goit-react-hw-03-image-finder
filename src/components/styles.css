@@ -174,8 +174,8 @@ html {
   
   .modal {
     
-width: calc(100vw - 60px);
-height: calc(100vh - 48px);
+max-width: calc(100vw - 60px);
+max-height: calc(100vh - 48px);
     background-color: white;
   }
   

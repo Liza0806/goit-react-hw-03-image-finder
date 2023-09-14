@@ -53,10 +53,9 @@ componentDidUpdate(prevProps) {
   }
 }
 
-openModal = (bool) => {
-  this.setState({ showModal: bool });
+openModal = (bool, img) => {
+  this.setState({ showModal: bool, selectedImage: img });
 };
-
 
 closeModal = () => {
   this.setState({ showModal: false, selectedImage: null });
@@ -69,10 +68,11 @@ render() {
     if (status === "rejected"){ return <div>reject</div>}
     if (status === "resolved"){ return (
     <ul className="gallery">
-      <ImageGalleryItem pictures={this.state.pictures}  openModal={this.openModal}/>
-      {this.showModal && (
-          <Modal />
-        )}
+      <ImageGalleryItem pictures={this.state.pictures}  openModal={this.openModal} />
+     {this.state.showModal && 
+          <Modal img={this.state.selectedImage} onClose={this.closeModal} />
+      }
+   
 
     </ul>)}
 

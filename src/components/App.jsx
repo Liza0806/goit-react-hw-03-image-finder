@@ -3,7 +3,7 @@
  import "./styles.css";
 // import { ImageGalleryItem } from "./ImageGalleryItem";
 import { Loader } from "./Loader";
-import { Modal } from "./Modal";
+//import { Modal } from "./Modal";
 import { Component } from "react"
 
 import { Searchbar } from "./Searchbar";
@@ -47,7 +47,7 @@ export class App extends Component {
  <Searchbar onSubmit={this.handleFormSubmit}/>
  <Loader/>
  <ImageGallery keyWord={this.state.keyWord} showModal={this.viewLargeImg}/>
-{this.state.showModal && <Modal />}
+
  <ToastContainer />
     </div>
   )}
