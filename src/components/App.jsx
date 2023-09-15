@@ -1,42 +1,45 @@
-// import { Button } from "./Button";
- import { ImageGallery } from "./ImageGallery";
- import "./styles.css";
-// import { ImageGalleryItem } from "./ImageGalleryItem";
+import { ImageGallery } from "./ImageGallery";
+import "./styles.css";
 import { Loader } from "./Loader";
-//import { Modal } from "./Modal";
-import { Component } from "react"
-
+import { Component } from "react";
 import { Searchbar } from "./Searchbar";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import {LoadMoreBtn} from './Button';
 
 
 export class App extends Component {
-  state = {
-    keyWord: "",
-   showModal: false,
-    backdroundImg: ""
 
+state = {
+  keyWord: "",
+  showLoadMoreBtn: false,
+  pageNumber: 1,
   }
- handleFormSubmit = (keyWord) => {
- this.setState({ keyWord: keyWord })
-    console.log(keyWord)
 
+
+handleFormSubmit = (keyWord) => {
+ this.setState({ keyWord: keyWord,  pageNumber: 1})
   return keyWord}
 
-  viewLargeImg (bool){
-    this.setState({showModal: bool})
+viewLargeImg (bool){
+  this.setState({showModal: bool})
   }
 
+
+loadMore = () => {
+  this.setState({pageNumber: this.state.pageNumber += 1})
+}
+
+isLoadMoreBtnShown(bool){
+  this.setState({showLoadMoreBtn: bool})
+  }
+
+render () {
  
-  
-  render () {
- 
-  return (
+return (
     <div
-      style={{
-        display: "grid",
+    style={{
+    display: "grid",
     gridTemplateColumns: "1fr",
     gridGap: "16px",
     paddingBottom: "24px"
@@ -44,9 +47,16 @@ export class App extends Component {
     >
  <Searchbar onSubmit={this.handleFormSubmit}/>
  <Loader/>
- <ImageGallery keyWord={this.state.keyWord} showModal={this.viewLargeImg}/>
+ <ImageGallery 
+ keyWord={this.state.keyWord} 
+ showModal={this.viewLargeImg} 
+ pageNumber={this.state.pageNumber} 
+ checkLastOfPages={this.checkLastOfPages} 
+ isLoadMoreBtnShown={(showLoadMoreBtn) => this.setState({ showLoadMoreBtn })}/>
+{this.state.keyWord !== "" && this.state.showLoadMoreBtn && <LoadMoreBtn loadMore={this.loadMore}/>}
 
  <ToastContainer />
+
     </div>
   )}
 };

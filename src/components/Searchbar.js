@@ -13,6 +13,7 @@ if(inputValue.trim() === ""){
  return toast.error("Get name")
 }
 this.props.onSubmit(inputValue);
+e.target.elements.searchInput.value = ""
 // console.log(this.state)
 }
 
