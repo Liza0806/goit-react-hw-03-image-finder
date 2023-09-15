@@ -8,10 +8,12 @@ export class Modal extends Component {
 
   render(){
     const { onClose} = this.props;
-    return createPortal(<div className="overlay">
+    return createPortal(<div className="overlay" onClick={this.props.handleBackdropClick}>
     <div className="modal">
+
+    <button onClick={onClose}>x</button>
     <img src={this.props.img} alt="" />
-          <button onClick={onClose}>Close</button>
+        
     </div>
   </div>, modalRoot)}
 }

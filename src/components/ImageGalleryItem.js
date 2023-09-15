@@ -13,7 +13,7 @@ export class ImageGalleryItem extends Component {
    // console.log(item)
   };
   render() {
-    console.log(this.props.pictures[0].pageURL)
+    // console.log(this.props.pictures[0].pageURL)
     return (
       <Fragment>
         {this.props.pictures &&

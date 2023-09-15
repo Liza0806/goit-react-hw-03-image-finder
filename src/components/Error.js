@@ -3,7 +3,7 @@ export const Error = () => {
       <div>
         <p>Draw this picture yourself</p>
         <img
-          src=''
+          src='./images/drawingartist10.jpg'
           alt="Artist"
         />
       </div>

@@ -16,7 +16,6 @@ state= {
 }
 
 
-
 fetchData = () => {
   const myKey = '38602994-963aa75bc12682ba48659a817';
   axios
@@ -57,7 +56,25 @@ componentDidUpdate(prevProps) {
     this.fetchData();
   }
 }
+componentDidMount(){
+  window.addEventListener('keydown', this.handleKeyDown)
+}
+componentWillUnmount (){
+  window.removeEventListener('keydown', this.handleKeyDown)
+}
+handleKeyDown = (e) => {
+  if (e.code==='Escape'){
+    this.closeModal()
+   }
+}
 
+// functon for modal//
+
+handleBackdropClick = (e)=>{
+if (e.currentTarget === e.target){
+  this.closeModal()
+}
+}
 openModal = (bool, img) => {
   this.setState({ showModal: bool, selectedImage: img });
 };
@@ -65,6 +82,12 @@ openModal = (bool, img) => {
 closeModal = () => {
   this.setState({ showModal: false, selectedImage: null });
 };
+handleKeyDown = (e) => {
+  if (e.code==='Escape'){
+    this.closeModal()
+   }
+}
+///
 render() {
   const {status} = this.state;
   if (status === "idle") { 
@@ -75,7 +98,7 @@ render() {
     <ul className="imageGallery">
       <ImageGalleryItem pictures={this.state.pictures}  openModal={this.openModal} />
      {this.state.showModal && 
-          <Modal img={this.state.selectedImage} onClose={this.closeModal} />
+          <Modal img={this.state.selectedImage} onClose={this.closeModal} handleBackdropClick={this.handleBackdropClick} />
       }
    
 
