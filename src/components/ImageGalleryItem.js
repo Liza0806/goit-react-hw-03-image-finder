@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment  } from "react";
 import "./styles.css";
 
 
@@ -15,16 +15,16 @@ export class ImageGalleryItem extends Component {
   render() {
     console.log(this.props.pictures[0].pageURL)
     return (
-      <div>
+      <Fragment>
         {this.props.pictures &&
           this.props.pictures.map(item => (
           
-            <li key={item.id} className="gallery-item"> <a href={item.largeImageURL} onClick={(e) => this.handleClick(e, item)} >
-              <img src={item.pageURL} alt={item.id}  /></a> 
+            <li key={item.id} className="imageGalleryItem"> <a href={item.largeImageURL} onClick={(e) => this.handleClick(e, item)} >
+              <img className="imageGalleryItem-image" src={item.pageURL} alt={item.id}  /></a> 
             </li>
           ))
         }
-      </div>
+     </Fragment>
     );
   }
 }
