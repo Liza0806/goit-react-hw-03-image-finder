@@ -26,9 +26,11 @@ viewLargeImg (bool){
   }
 
 
-loadMore = () => {
-  this.setState({pageNumber: this.state.pageNumber += 1})
-}
+  loadMore = () => {
+    this.setState((prevState) => ({
+      pageNumber: prevState.pageNumber + 1
+    }));
+  }
 
 isLoadMoreBtnShown(bool){
   this.setState({showLoadMoreBtn: bool})
