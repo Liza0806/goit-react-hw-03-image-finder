@@ -4,6 +4,10 @@ import { ImageGalleryItem } from "./ImageGalleryItem";
 import { Modal } from "./Modal";
 import { Error } from "./Error"; 
 import axios from "axios";
+import { BallTriangle } from 'react-loader-spinner'
+
+
+
 
 export class ImageGallery extends Component {
 
@@ -62,6 +66,7 @@ fetchData = () => {
 componentDidUpdate(prevProps) {
   if (prevProps.keyWord !== this.props.keyWord || prevProps.pageNumber !== this.props.pageNumber) {
     this.setState({status: "pending"})
+    this.props.isLoadMoreBtnShown(false);
     this.fetchData();
   }
 }
@@ -106,7 +111,18 @@ render() {
     return <div>Start searching...</div>}
 
   if (status === "pending") { 
-    return <div>Loading...</div>}
+    return    <div className="loader-container">
+    <BallTriangle
+      height={300}
+      width={300}
+      radius={5}
+      color="#4fa94d"
+      ariaLabel="ball-triangle-loading"
+      wrapperClass={{}}
+      wrapperStyle=""
+      visible={true}
+    />
+  </div>}
 
   if (status === "rejected") { 
     return (<Error/>)}

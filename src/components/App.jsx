@@ -1,6 +1,5 @@
 import { ImageGallery } from "./ImageGallery";
 import "./styles.css";
-import { Loader } from "./Loader";
 import { Component } from "react";
 import { Searchbar } from "./Searchbar";
 import { ToastContainer} from 'react-toastify';
@@ -48,7 +47,6 @@ return (
       }}
     >
  <Searchbar onSubmit={this.handleFormSubmit}/>
- <Loader/>
  <ImageGallery 
  keyWord={this.state.keyWord} 
  showModal={this.viewLargeImg} 
