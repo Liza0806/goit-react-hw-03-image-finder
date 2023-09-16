@@ -1,7 +1,8 @@
-import React, { Component} from "react";
+import React, { Component, Fragment } from "react";
 import "./styles.css";
 import { ImageGalleryItem } from "./ImageGalleryItem";
 import { Modal } from "./Modal";
+import {LoadMoreBtn} from './Button';
 import { Error } from "./Error"; 
 import axios from "axios";
 import { BallTriangle } from 'react-loader-spinner'
@@ -15,15 +16,16 @@ state= {
   pictures: [],
   status: "idle",
   error: null,
-  showModal: false, 
+ 
   selectedImage: null,
   perPage: 12,
-  showLoadMoreBtn: false,
-    
-  
+  pageNumber: 1, 
+
+  showModal: false, 
+  showLoadMoreBtn: false, 
 }
 
-
+ standartPerPage = this.state.perPage
 fetchData = () => {
   const myKey = '38602994-963aa75bc12682ba48659a817';
   axios
@@ -43,66 +45,76 @@ fetchData = () => {
     }
   })
   .then((data) => {
-    const showLoadMoreBtn = this.checkLastOfPages(data.hits.length, this.state.perPage);
+    const showLoadMoreBtn = this.checkLastOfPages(data.hits.length, this.standartPerPage); 
     if (data.hits.length === 0) {
       return Promise.reject(new Error("No such images"));
-    }
-  
-  this.setState({
-    pictures: data.hits,
-    status: "resolved",
-    showLoadMoreBtn: this.checkLastOfPages(data.hits.length, this.state.perPage),
-  });
-  this.props.isLoadMoreBtnShown(showLoadMoreBtn);
+    } 
+    this.setState(({
+      pictures: data.hits,
+      status: "resolved",
+      showLoadMoreBtn: showLoadMoreBtn,
+    }));
+
 })
   .catch((error) => {
     console.error('Error fetching data:', error);
     this.setState({ error, status: "rejected" });
-    this.props.isLoadMoreBtnShown(false);
+   
   })
 };
 
 
-componentDidUpdate(prevProps) {
-  if (prevProps.keyWord !== this.props.keyWord || prevProps.pageNumber !== this.props.pageNumber) {
-    this.setState({status: "pending"})
-    this.props.isLoadMoreBtnShown(false);
+componentDidUpdate(prevProps, prevState) {
+  if (prevProps.keyWord !== this.props.keyWord) 
+  {
+    this.setState({
+    status: "pending",
+    pictures: [],
+    pageNumber: 1,
+    perPage: 12,  })
+
     this.fetchData();
   }
-}
-componentDidMount(){
-  window.addEventListener('keydown', this.handleKeyDown)
-}
-componentWillUnmount (){
-  window.removeEventListener('keydown', this.handleKeyDown)
+
+  if(prevState.pageNumber !== this.state.pageNumber){
+    this.setState({
+      status: "pending",
+    })
+  
+  
+      this.fetchData();
+    }
 }
 
+
+// for load more button //
 
 checkLastOfPages = (countOfPictures, perPage) => {
   return countOfPictures>=perPage
  }
+ loadMore = () => {
+  this.setState((prevState) => ({
+    pageNumber: prevState.pageNumber + 1,
+    perPage: prevState.perPage + this.standartPerPage, 
+  }));
+}
+
+//////////////////
+
 
 // functon for modal //
-
-handleBackdropClick = (e)=>{
-if (e.currentTarget === e.target){
-  this.closeModal()
+getStateShowModal = (bool, img) => {
+this.setState({
+  showModal: bool,
+  selectedImage: img
+})
 }
-}
-openModal = (bool, img) => {
-  this.setState({ showModal: bool, selectedImage: img });
-
-};
-
+    
 closeModal = () => {
   this.setState({ showModal: false, selectedImage: null });
 
 };
-handleKeyDown = (e) => {
-  if (e.code==='Escape'){
-    this.closeModal()
-   }
-}
+
 ///
 render() {
   const {status} = this.state;
@@ -129,13 +141,17 @@ render() {
 
   if (status === "resolved") { 
     return (
-
+      <Fragment>
+    
     <ul className="imageGallery">
-      <ImageGalleryItem pictures={this.state.pictures}  openModal={this.openModal} />
-     {this.state.showModal && 
-          <Modal img={this.state.selectedImage} onClose={this.closeModal} handleBackdropClick={this.handleBackdropClick} />
+      <ImageGalleryItem pictures={this.state.pictures} getStateShowModal={this.getStateShowModal}  />
+     {this.state.showModal && this.state.selectedImage &&
+          <Modal img={this.state.selectedImage} closeModal={this.closeModal}/>
       }
     </ul>
+    { this.state.showLoadMoreBtn && <LoadMoreBtn loadMore={this.loadMore}/>}
+    
+    </Fragment>
     )}
 }
 };

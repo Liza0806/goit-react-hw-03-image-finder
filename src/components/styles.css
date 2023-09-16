@@ -173,25 +173,14 @@ html {
     z-index: 1200;
   }
   
-  .modal {
-    
-max-width: calc(100vw - 60px);
-max-height: calc(100vh - 48px);
+  .modal { 
+max-width: calc(100vw - 80px);
+max-height: calc(100vh - 60px);
     background-color: white;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
     padding-top: 20px;
     transition: top 0.3s ease-in-out;
     top: -100%; 
-  }
-  .modal.active {
-    top: 50%;
-  }
-  .buttonModal {
-  margin-left: auto;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  display: block;
-
   }
   /*
   * Стили компонента Buton (Load more)

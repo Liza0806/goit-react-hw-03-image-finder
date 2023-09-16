@@ -3,21 +3,23 @@ import "./styles.css";
 
 
 export class ImageGalleryItem extends Component {
-
-  state ={
-    showModal: false
-  }
-  handleClick = (e, item) => {
-    e.preventDefault();
-    this.props.openModal(true, item.largeImageURL);
+  openModal = () => {
+    this.props.getStateShowModal(true, )
   };
+ 
+
+
+ // handleClick = (e, img) => {
+ //   e.preventDefault();
+ //   this.props.getStateShowModal(true, img)
+ // };
   render() {
     return (
       <Fragment>
         {this.props.pictures &&
           this.props.pictures.map(item => (
-          
-            <li key={item.id} className="imageGalleryItem"> <a href={item.largeImageURL} onClick={(e) => this.handleClick(e, item)} >
+            <li key={item.id} className="imageGalleryItem"> <a href={item.largeImageURL} onClick={(e) => {e.preventDefault();
+              this.props.getStateShowModal(true, item.largeImageURL)}} >
               <img className="imageGalleryItem-image" src={item.webformatURL} alt={item.id}  /></a> 
             </li>
           ))
