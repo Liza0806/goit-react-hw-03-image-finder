@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {createPortal} from 'react-dom';
-import { AiOutlineClose } from "react-icons/ai";
 import './styles.css';
 
 const modalRoot = document.querySelector("#modal")
