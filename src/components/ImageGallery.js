@@ -71,7 +71,7 @@ componentDidUpdate(prevProps, prevState) {
     status: "pending",
     pictures: [],
     pageNumber: 1,
-    perPage: 12,  })
+    perPage: this.standartPerPage,  })
 
     this.fetchData();
   }
