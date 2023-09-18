@@ -9,14 +9,14 @@ export class Searchbar extends Component {
 handleSubmitStateKeyWord = (e) => {
   e.preventDefault()
   let inputValue = e.target.elements.searchInput.value.toLowerCase();
+
 if(inputValue.trim() === ""){
  return toast.error("Get name")
 }
+
 this.props.onSubmit(inputValue);
 e.target.elements.searchInput.value = ""
-// console.log(this.state)
 }
-
 
 render (){
     return (
