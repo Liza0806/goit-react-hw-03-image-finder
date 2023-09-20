@@ -20,7 +20,7 @@ export const fetchData = (q, page, per_page) => {
         if (data.hits.length === 0) {
           throw new Error("No images found");
         }
-  
+  console.log(data)
         return data;
       })
   };

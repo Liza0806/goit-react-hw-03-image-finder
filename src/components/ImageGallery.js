@@ -1,20 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import "./styles.css";
 import { ImageGalleryItem } from "./ImageGalleryItem";
 
-export class ImageGallery extends Component {
-
-  state = {
-    pictures: this.props.pictures
-  }
-
-
-  render(){ 
+export const ImageGallery = ({pictures}) => {
   return(
   <ul className="imageGallery">
  
-    <ImageGalleryItem pictures={this.props.pictures} />
+    <ImageGalleryItem pictures={pictures} />
   
-</ul>)}
+</ul>)
  
 }

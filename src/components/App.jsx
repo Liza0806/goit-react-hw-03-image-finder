@@ -1,6 +1,6 @@
 import { ImageGallery } from "./ImageGallery";
 import "./styles.css";
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import { Searchbar } from "./Searchbar";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,77 +10,66 @@ import { BallTriangle } from 'react-loader-spinner'
 import { Error } from "./Error"; 
 
 
-export class App extends Component {
-
-state = {
-  keyWord: "",
-  pageNumber: 1,
-  pictures:[],
-  perPage: 12,
-  status:"idle",
-  showLoadMoreBtn: false,
-  error: null,
-  }
+export const App = () => {
+const [keyWord, setKeyWord] = useState("");
+const [pageNumber, setPageNumber] = useState(1);
+const [pictures, setPictures] = useState([]);
+const [perPage, setPerPage] = useState(12);
+const [status, setStatus] = useState("idle");
+const [showLoadMoreBtn, setShowLoadMoreBtn] = useState(false);
+const [error, setError] = useState(null);
 
 
-handleFormSubmit = (keyWord) => {
- this.setState({ 
-  keyWord: keyWord,  
-  pageNumber: 1,
-  pictures: [],
-  status: "pending",
-  
-})
-this.fetchData(keyWord, 1, this.state.perPage);
+
+ async function handleFormSubmit(keyWord) {
+  setKeyWord(keyWord);
+  setPageNumber(1);
+  setPictures([])
+  setStatus("pending")
   return keyWord}
-
-  async fetchData(keyWord, pageNumber, perPage) {
- try {
-     const data = await fetchData(keyWord, pageNumber, perPage);
-
-   const showLoadMoreBtn = this.checkLastOfPages(data.hits.length, perPage);
-
-     this.setState({
-       pictures: [...this.state.pictures, ...data.hits],
-       status: "resolved",
-       showLoadMoreBtn: showLoadMoreBtn,
-    });
-  } catch (error) {
-    this.handleFetchError()
-    this.setState({ error, status: "rejected" });
-   }
- }
-handleFetchError = (error) => {
-
-     this.setState({ error, status: "rejected" });
-   }
-   handleLoadMore = (newPageNumber) => {
-    this.setState({ 
-      pageNumber: newPageNumber,
-      status: "pending"
-     }, () => {
-      this.fetchData(this.state.keyWord, newPageNumber, this.state.perPage);
-    });
+  
+   async function handleLoadMore (newPageNumber) {
+     setPageNumber(newPageNumber);
+     setStatus("pending");
   };
 
-  checkLastOfPages = (countOfPictures, perPage) => {
+  useEffect(()=> {
+    async function fetchDataAndSetData() {
+      try{
+      const data = await fetchData(keyWord, pageNumber, perPage);
+       console.log(data)
+       setPictures([...pictures, ...data.hits]);
+       setStatus("resolved")
+       setShowLoadMoreBtn(checkLastOfPages(data.hits.length, perPage));
+      }
+      catch{
+      setError(error);
+      setStatus("rejected");
+      }
+      
+    }
+    if (status === "pending") {
+      fetchDataAndSetData();
+    } 
+  }, [keyWord, pageNumber, perPage, status])
+  const checkLastOfPages = (countOfPictures, perPage) => {
        return countOfPictures>=perPage
       }
 
-render () {
-  const {status} = this.state;
+
+ 
 
   if (status === "idle") { 
        return (
   <div className="app"> 
-  <Searchbar onSubmit={this.handleFormSubmit}/>
+  <Searchbar onSubmit={handleFormSubmit}/>
   <ToastContainer />
   </div>)}
   
     if (status === "pending") { 
       return (
   <div className="app"> 
-  <Searchbar onSubmit={this.handleFormSubmit}/>
+  <Searchbar onSubmit={handleFormSubmit}/>
   <div className="loader-container">
   <BallTriangle
         height={300}
@@ -100,7 +89,7 @@ render () {
     if (status === "rejected") { 
       return (
         <div className="app"> 
-  <Searchbar onSubmit={this.handleFormSubmit}/>
+  <Searchbar onSubmit={handleFormSubmit}/>
   <Error/>
   <ToastContainer />
         </div>
@@ -108,14 +97,14 @@ render () {
       if (status === "resolved") { 
         return(
         <div className="app">
- <Searchbar onSubmit={this.handleFormSubmit}/>
+ <Searchbar onSubmit={handleFormSubmit}/>
  <ImageGallery 
-       pictures={this.state.pictures}
+       pictures={pictures}
  />
-{this.state.showLoadMoreBtn && <LoadMoreBtn onClick={() => this.handleLoadMore(this.state.pageNumber + 1)} />}
+{showLoadMoreBtn && <LoadMoreBtn onClick={() => handleLoadMore(pageNumber + 1)} />}
 <ToastContainer />
     </div>
       ) }
   
 
-}}
+}

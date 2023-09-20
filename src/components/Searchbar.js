@@ -1,27 +1,29 @@
-import { Component } from "react"
+import { Component, useState } from "react"
 import { toast } from "react-toastify";
 import "./styles.css";
 
-export class Searchbar extends Component {
-  state = {
-    keyWord: "",
-  }
-handleSubmitStateKeyWord = (e) => {
+export const Searchbar =({onSubmit}) => {
+  // state = {
+  //   keyWord: "",
+  // }
+  const [keyWord, setKeyWord] = useState("")
+const handleSubmitStateKeyWord = (e) => {
   e.preventDefault()
-  let inputValue = e.target.elements.searchInput.value.toLowerCase();
+  setKeyWord(e.target.elements.searchInput.value.toLowerCase())
+let inputValue = e.target.elements.searchInput.value.toLowerCase();
 
 if(inputValue.trim() === ""){
  return toast.error("Get name")
 }
 
-this.props.onSubmit(inputValue);
+onSubmit(e.target.elements.searchInput.value.toLowerCase());
 e.target.elements.searchInput.value = ""
 }
 
-render (){
+
     return (
     <header className="searchbar">
-    <form className="form" onSubmit={this.handleSubmitStateKeyWord}>
+    <form className="form" onSubmit={handleSubmitStateKeyWord}>
       <button type="submit" className="button">
         <span className="button-label">Search</span>
       </button>
@@ -35,5 +37,5 @@ render (){
         placeholder="Search images and photos"
       />
     </form>
-  </header>)}
+  </header>)
 }
