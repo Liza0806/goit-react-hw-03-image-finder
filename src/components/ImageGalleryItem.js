@@ -3,19 +3,11 @@ import { Modal } from "./Modal";
 import "./styles.css";
 
 export const ImageGalleryItem = ({pictures}) => {
-  // state ={
-  //   showModal: false,
-  //   bigImg: null
-  // }
   const [showModal, setSowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null)
  const  openModal = (img) => {
   setSelectedImage(img);
    setSowModal(true);
-  //  this.setState({
-  //    showModal: true,
-  //    selectedImage: img
-  //  })
   };
   const closeModal = () => {
     setSelectedImage(null);

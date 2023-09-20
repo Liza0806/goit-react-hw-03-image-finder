@@ -51,7 +51,7 @@ const [error, setError] = useState(null);
     if (status === "pending") {
       fetchDataAndSetData();
     } 
-  }, [keyWord, pageNumber, perPage, status])
+  }, [keyWord, pageNumber, perPage, status, error, pictures])
   const checkLastOfPages = (countOfPictures, perPage) => {
        return countOfPictures>=perPage
       }
