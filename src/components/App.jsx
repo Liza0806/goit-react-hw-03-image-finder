@@ -14,7 +14,7 @@ export const App = () => {
 const [keyWord, setKeyWord] = useState("");
 const [pageNumber, setPageNumber] = useState(1);
 const [pictures, setPictures] = useState([]);
-const [perPage, setPerPage] = useState(12);
+const [perPage] = useState(12);
 const [status, setStatus] = useState("idle");
 const [showLoadMoreBtn, setShowLoadMoreBtn] = useState(false);
 const [error, setError] = useState(null);

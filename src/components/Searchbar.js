@@ -1,4 +1,4 @@
-import { Component, useState } from "react"
+import { useState } from "react"
 import { toast } from "react-toastify";
 import "./styles.css";
 
@@ -9,6 +9,7 @@ export const Searchbar =({onSubmit}) => {
   const [keyWord, setKeyWord] = useState("")
 const handleSubmitStateKeyWord = (e) => {
   e.preventDefault()
+  console.log(keyWord)
   setKeyWord(e.target.elements.searchInput.value.toLowerCase())
 let inputValue = e.target.elements.searchInput.value.toLowerCase();
 
