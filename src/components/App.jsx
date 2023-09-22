@@ -56,55 +56,37 @@ const [error, setError] = useState(null);
        return countOfPictures>=perPage
       }
 
-
- 
-
-  if (status === "idle") { 
-       return (
-  <div className="app"> 
-  <Searchbar onSubmit={handleFormSubmit}/>
-  <ToastContainer />
-  </div>)}
-  
-    if (status === "pending") { 
       return (
-  <div className="app"> 
-  <Searchbar onSubmit={handleFormSubmit}/>
-  <div className="loader-container">
-  <BallTriangle
-        height={300}
-        width={300}
-        radius={5}
-        color="#4fa94d"
-        ariaLabel="ball-triangle-loading"
-        wrapperClass={{}}
-        wrapperStyle=""
-        visible={true}
-      />
-     </div>
-  <ToastContainer />
-        </div>)
-      }
-  
-    if (status === "rejected") { 
-      return (
-        <div className="app"> 
-  <Searchbar onSubmit={handleFormSubmit}/>
-  <Error/>
-  <ToastContainer />
-        </div>
-      )}
-      if (status === "resolved") { 
-        return(
         <div className="app">
- <Searchbar onSubmit={handleFormSubmit}/>
- <ImageGallery 
-       pictures={pictures}
- />
-{showLoadMoreBtn && <LoadMoreBtn onClick={() => handleLoadMore(pageNumber + 1)} />}
-<ToastContainer />
-    </div>
-      ) }
+          <Searchbar onSubmit={handleFormSubmit} />
+          <ToastContainer />
+      
+          {status === "pending" && (
+            <div className="loader-container">
+              <BallTriangle
+                height={300}
+                width={300}
+                radius={5}
+                color="#4fa94d"
+                ariaLabel="ball-triangle-loading"
+                wrapperClass={{}}
+                wrapperStyle=""
+                visible={true}
+              />
+            </div>
+          )}
+      
+          {status === "rejected" && <Error />}
+      
+          {status === "resolved" && (
+            <div>
+              <ImageGallery pictures={pictures} />
+              {showLoadMoreBtn && (
+                <LoadMoreBtn onClick={() => handleLoadMore(pageNumber + 1)} />
+              )}
+            </div>
+          )}
+        </div>
+      ); }
   
-
-}
+   
